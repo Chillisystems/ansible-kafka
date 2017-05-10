@@ -2,10 +2,10 @@
 
 - name: Install Systems Requirements
   apt:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: present
   with_items:
-    - '{{ kafka_dependencies }}'
+    - "{{ kafka_dependencies }}"
 
 - name: Create Distribution directory
   file:

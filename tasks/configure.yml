@@ -1,14 +1,4 @@
 ---
-
-#- name: Detect if this is a systemd based system
-#  command: cat /proc/1/comm
-#  register: init
-#  changed_when: False
-#- set_fact: use_systemd=True
-#  when: init.stdout == 'systemd'
-#- set_fact: use_systemd=False
-#  when: init.stdout != 'systemd'
-
 - name: Copy Kafka systemd service file
   template:
     src: kafka.systemd.service.j2
@@ -17,8 +7,21 @@
     group: root
     mode: 0644
   notify:
-    - reload systemd
+    - Reload systemd
+    - Restart kafka
   when: ansible_service_mgr == 'systemd'
+
+- name: Copy Kafka upstart init script
+  template:
+    src: kafka.upstart.conf.j2
+    dest: /etc/init/kafka.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - Reload upstart
+    - Restart kafka
+  when: ansible_service_mgr == 'upstart'
 
 - name: Copy Kafka server-start
   template:
@@ -28,25 +31,7 @@
     group: root
     mode: 0755
   notify:
-    - restart kafka
-
-- name: Copy Kafka init script
-  template:
-    src: kafka.upstart.conf.j2
-    dest: /etc/init/kafka.conf
-    mode: 0644
-    owner: root
-    group: root
-  register: upstart_init
-  notify:
-    - restart kafka
-  when: ansible_service_mgr == 'upstart'
-
-- name: Reload init scripts
-  command: initctl reload-configuration
-  when: upstart_init | changed
-  notify:
-    - restart kafka
+    - Restart kafka
 
 - name: Copy Kafka log4.properties
   template:
@@ -56,7 +41,7 @@
     group: kafka
     mode: 0644
   notify:
-    - restart kafka
+    - Restart kafka
 
 - name: Copy Kafka server.properties
   template:
@@ -66,6 +51,6 @@
     group: kafka
     mode: 0644
   notify:
-    - restart kafka
+    - Restart kafka
 
 - meta: flush_handlers

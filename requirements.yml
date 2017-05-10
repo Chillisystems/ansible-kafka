@@ -1,0 +1,5 @@
+- name: ansible-zookeeper
+  src: https://github.com/Chillisystems/ansible-zookeeper.git
+  scm: git
+  version: master
+  path: ./dist
