@@ -12,6 +12,7 @@ def test_packages(Package, name, version):
     assert pkg.is_installed
     assert pkg.version.startswith(version)
 
+
 @pytest.mark.parametrize('service_name', [
     ('zookeeper'),
     ('kafka'),
@@ -21,6 +22,7 @@ def test_kafka_service_enabled(Service, service_name):
 
     assert s.is_running
     assert s.is_enabled
+
 
 @pytest.mark.parametrize('service_url', [
     ('tcp://:::2181'),

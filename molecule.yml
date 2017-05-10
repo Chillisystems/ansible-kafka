@@ -1,5 +1,6 @@
 ---
 dependency:
+  name: galaxy
   requirements_file: requirements.yml
   options:
       ignore-certs: True
