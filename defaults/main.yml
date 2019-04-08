@@ -30,3 +30,5 @@ kafka_log_cleanup_interval_mins: 1
 kafka_wait_for_period: 30
 monasca_log_level: WARN
 zookeeper_connection_timeout_ms: 1000000
+
+java_distribution: openjdk

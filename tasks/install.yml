@@ -13,6 +13,13 @@
     - "{{ kafka_openjdk_pkg }}"
   when: _java_version.failed
 
+- name: Detect Oracle JDK/OpenJDK
+  set_fact:
+    java_distribution: oracle
+  when: _java_version.stderr is search('^Java\(TM\).*')
+
+- debug: var=java_distribution
+
 - name: Create Distribution directory
   file:
     path: "{{ dist_dir }}"
