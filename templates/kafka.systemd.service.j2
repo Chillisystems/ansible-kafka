@@ -8,6 +8,7 @@ Type=simple
 User=kafka
 WorkingDirectory={{ kafka_dir }}
 PermissionsStartOnly=true
+EnvironmentFile=/etc/default/kafka
 ExecStartPre=/bin/mkdir -p /var/run/kafka
 ExecStartPre=/bin/chown -R kafka:kafka /var/run/kafka
 ExecStart={{ kafka_dir }}/bin/kafka-server-start.sh {{ kafka_dir }}/config/server.properties

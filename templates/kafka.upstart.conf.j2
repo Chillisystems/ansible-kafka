@@ -25,9 +25,11 @@ respawn
 
 limit nofile 32768 32768
 
-env KAFKA_HEAP_OPTS="{{ kafka_heap_opts }}"
-
 setuid kafka
 setgid kafka
 
-exec {{ kafka_dir }}/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+script
+  set -a
+  . /etc/default/kafka
+ {{ kafka_dir }}/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+end script
