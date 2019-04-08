@@ -1,11 +1,17 @@
 ---
 
+- name: Check if java is not already installed
+  command: java -version
+  register: _java_version
+  ignore_errors: true
+
 - name: Install Systems Requirements
   apt:
     name: "{{ item }}"
     state: present
   with_items:
-    - "{{ kafka_dependencies }}"
+    - "{{ kafka_openjdk_pkg }}"
+  when: _java_version.failed
 
 - name: Create Distribution directory
   file:
