@@ -23,7 +23,7 @@
     - Restart kafka
   when: ansible_service_mgr == 'upstart'
 
-- name: Copy Kafka server-start
+- name: Copy Kafka default env file
   template:
     src: kafka.j2
     dest:  /etc/default/kafka

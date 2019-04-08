@@ -4,7 +4,7 @@
 # KAFKA_GC_LOG_OPTS="-Xloggc:$LOG_DIR/$GC_LOG_FILE_NAME -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps "
 
 KAFKA_GC_LOG_OPTS="-Xlog:gc:{{ kafka_log_dir }}/kafka-gc-logfile -verbose:gc -Xlog:gc*"
-KAFKA_HEAP_OPTS="{{ kafka_heap_opts }}"
+KAFKA_HEAP_OPTS="--add-modules=java.xml.bind {{ kafka_heap_opts }}"
 
 LOG_DIR="{{ kafka_log_dir }}"
 # EXTRA_ARGS='-name kafkaServer -loggc'
